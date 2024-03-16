@@ -29,23 +29,32 @@ const userObj = {
 // });
 
 function getUsersList(callback) {
-  let users = [];
   console.log(`file Path within getUsersList: ${filePath}`);
 
+  const getUsers = (users) => {
+    users.push(userObj);
+    fs.writeFile(filePath, JSON.stringify(users), (err) => {
+      if (err) {
+        console.log(`Error occurred during writing data`);
+      } else {
+        callback(users);
+        console.log(`Successfully added users to file`);
+      }
+    });
+  };
+
+  readFileData(filePath, getUsers);
+}
+
+function readFileData(filePath, callback) {
+  let data = [];
   fs.readFile(filePath, (error, contents) => {
     if (error) {
       console.log("Error", error);
       callback([]);
     } else {
-      users = JSON.parse(contents);
-      users.push(userObj);
-      fs.writeFile(filePath, JSON.stringify(users), (err) => {
-        if (err) {
-          callback([]);
-        } else {
-          callback(users);
-        }
-      });
+      data = JSON.parse(contents);
+      callback(data);
     }
   });
 }
@@ -53,5 +62,7 @@ function getUsersList(callback) {
 const userList = (users) => {
   console.log("user list:-", users);
 };
+
+// readFileData(filePath, userList);
 
 getUsersList(userList);

@@ -10,20 +10,48 @@ let fileContents = [];
 const userObj = {
   id: Math.floor(Math.random() * 100),
   referenceId: generateUUID(),
-  name: "User One",
+  name: "User Two",
 };
-fs.readFile(filePath, (err, contents) => {
-  if (!err) {
-    fileContents = JSON.parse(contents);
-    fileContents.push(userObj);
-    fs.writeFile(filePath, JSON.stringify(fileContents), (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(`User added...`);
-      }
-    });
-  } else {
-    console.log(`error`, err);
-  }
-});
+// fs.readFile(filePath, (err, contents) => {
+//   if (!err) {
+//     fileContents = JSON.parse(contents);
+//     fileContents.push(userObj);
+//     fs.writeFile(filePath, JSON.stringify(fileContents), (err) => {
+//       if (err) {
+//         console.log(err);
+//       } else {
+//         console.log(`User added...`);
+//       }
+//     });
+//   } else {
+//     console.log(`error`, err);
+//   }
+// });
+
+function getUsersList(callback) {
+  let users = [];
+  console.log(`file Path within getUsersList: ${filePath}`);
+
+  fs.readFile(filePath, (error, contents) => {
+    if (error) {
+      console.log("Error", error);
+      callback([]);
+    } else {
+      users = JSON.parse(contents);
+      users.push(userObj);
+      fs.writeFile(filePath, JSON.stringify(users), (err) => {
+        if (err) {
+          callback([]);
+        } else {
+          callback(users);
+        }
+      });
+    }
+  });
+}
+
+const userList = (users) => {
+  console.log("user list:-", users);
+};
+
+getUsersList(userList);

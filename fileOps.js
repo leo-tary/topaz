@@ -8,8 +8,8 @@ const filePath = path.join(rootDir, "users", "users.json");
 
 let fileContents = [];
 const userObj = {
-  // id: Math.floor(Math.random() * 100),
-  id: generateUUID(),
+  id: Math.floor(Math.random() * 100),
+  referenceId: generateUUID(),
   name: "User One",
 };
 fs.readFile(filePath, (err, contents) => {

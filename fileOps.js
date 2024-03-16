@@ -6,11 +6,11 @@ const rootDir = path.dirname(require.main.filename);
 // Add users.json within users directory and initialize with empty array([])
 const filePath = path.join(rootDir, "users", "users.json");
 
-let fileContents = [];
+let fileBasedContents = [];
 const userObj = {
   id: Math.floor(Math.random() * 100),
   referenceId: generateUUID(),
-  name: "User Two",
+  name: "User Nine",
 };
 // fs.readFile(filePath, (err, contents) => {
 //   if (!err) {
